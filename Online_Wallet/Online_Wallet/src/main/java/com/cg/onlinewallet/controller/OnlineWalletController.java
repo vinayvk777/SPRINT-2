@@ -27,11 +27,15 @@ public class OnlineWalletController {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	@RequestMapping("/")
-	public String check() {
-		return "WORKING";
-	}
+	/*********************************************************************************************************************
+	* Method:registerUser
+	* Description: to register a new user
+	* @param user: User's Details
+	* @returns Entity:After registering the user it will return the email of the user.
+	* Created By-Vinay Kumar Singh
+	* 
+	*********************************************************************************************************************/
+
 	
 	@PostMapping("/register")
 	public ResponseEntity<String> regsiterUser(@RequestBody WalletUser user) {
@@ -40,12 +44,21 @@ public class OnlineWalletController {
 
 	}
 	
+	/********************************************************************************************************************
+	* Method:login
+	* Description: for login into the application
+	* @param email: User's email
+	* @param password: User's password
+	* @returns Entity:After login it will return the userId
+	* Created By-Vinay Kumar Singh
+	* 
+	*********************************************************************************************************************/
+	
 	@GetMapping("/login")
 	public ResponseEntity<Integer> login(String email, String password) {
 		Integer userId = onlinewalletService.login(email, password);
 		return new ResponseEntity<Integer>(userId, HttpStatus.OK);
 	}
-	
-	
-
 }
+
+
