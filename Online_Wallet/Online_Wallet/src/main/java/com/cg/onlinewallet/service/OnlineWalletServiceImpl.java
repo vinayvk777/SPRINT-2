@@ -23,6 +23,39 @@ public class OnlineWalletServiceImpl implements OnlineWalletService {
 	@Autowired
 	private OnlineWalletDao onlineWalletSprint2Dao;
 
+	/*********************************************************************************************************************
+	 * Method: registerUser
+	 * Description: Register and create an account for the user
+	 * @param user: object containing data about user
+	 * @throws UnauthorizedAccessException: it is raised if the user is already present
+	 * Created By - Vinay Kumar Singh
+	 * 
+	 ***********************************************************************************************************************/
+	
+	@Override
+	public String registerUser(WalletUser user) {
+		// TODO Auto-generated method stub
+		if (onlineWalletSprint2Dao.checkUserByEmail(user.getEmail()) == true)
+			throw new UnauthorizedAccessException("A User already exist with same email address");
+		WalletAccount account = new WalletAccount(0.00, status.non_active);
+		user.setAccountDetail(account);
+		onlineWalletSprint2Dao.saveAccount(account);
+		onlineWalletSprint2Dao.saveUser(user);
+		return user.getEmail();
+	}
+	
+	/*********************************************************************************************************************
+	 * Method: login 
+	 * Description: To Validate the user data
+	 * @param email: User's email
+	 * @param password: User's password
+	 * @returns Integer: gives userId with the loginName if no exceptions occurs
+	 * @throws UnauthorizedAccessException: it occurs if the account with loginName is not an active user
+	 * @throws InvalidException: it occurs if the account with loginName is a admin type account
+	 * @throws ValidationException: it occurs if the password dosen't matches with the user's stored password
+	 * Created By - Vinay Kumar Singh
+	 * 
+	 ***********************************************************************************************************************/
 
 	@Override
 	public Integer login(String email, String password) {
@@ -38,17 +71,4 @@ public class OnlineWalletServiceImpl implements OnlineWalletService {
 			throw new ValidationException("The LoginName and password Combination does not match");
 		return user.getUserID();
 	}
-	
-	@Override
-	public String registerUser(WalletUser user) {
-		// TODO Auto-generated method stub
-		if (onlineWalletSprint2Dao.checkUserByEmail(user.getEmail()) == true)
-			throw new UnauthorizedAccessException("A User already exist with same email address");
-		WalletAccount account = new WalletAccount(0.00, status.non_active);
-		user.setAccountDetail(account);
-		onlineWalletSprint2Dao.saveAccount(account);
-		onlineWalletSprint2Dao.saveUser(user);
-		return user.getEmail();
-	}
-
 }
