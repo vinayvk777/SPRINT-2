@@ -21,9 +21,4 @@ public class ExceptionController {
 	public ResponseEntity<String> handleValidationException(ValidationException exception) {
 		return new ResponseEntity<String>(exception.getMessage(), HttpStatus.NOT_FOUND);
 	}
-
-	@ExceptionHandler(value = WrongValueException.class)
-	public ResponseEntity<String> handleWrongValueException(WrongValueException exception) {
-		return new ResponseEntity<String>(exception.getMessage(), HttpStatus.NOT_FOUND);
-	}
 }
