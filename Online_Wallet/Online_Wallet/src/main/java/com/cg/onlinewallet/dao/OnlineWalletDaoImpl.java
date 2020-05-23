@@ -43,8 +43,17 @@ public class OnlineWalletDaoImpl implements OnlineWalletDao {
 		return user;
 	}
 	
+	/*********************************************************************************************************************
+	* Method: checkUserByEmail
+	* Description: To check that whether a user is present with given email or not
+	* @param email:User's email
+	* @returns Boolean: true if the user is present with entered email, otherwise false
+	* Created By - Vinay Kumar Singh
+	***********************************************************************************************************************/
+	
+	
 	@Override
-	public boolean checkUserByEmail(String email) { // return false if the user is not present;
+	public boolean checkUserByEmail(String email) {
 		String Qstr = "SELECT user.email FROM WalletUser user WHERE user.email= :email";
 		TypedQuery<String> query = entityManager.createQuery(Qstr, String.class).setParameter("email", email);
 		try {
@@ -55,6 +64,16 @@ public class OnlineWalletDaoImpl implements OnlineWalletDao {
 		return true;
 	}
 	
+
+	/*********************************************************************************************************************
+	* Method: getUserByEmail
+	* Description: To access the user with the given email
+	* @param email:User's email
+	* @returns user: It will return the user present with entered email
+	* Created By - Vinay Kumar Singh
+	***********************************************************************************************************************/
+	
+	
 	@Override
 	public WalletUser getUserByEmail(String email) {
 		String Qstr = "SELECT user FROM WalletUser user WHERE user.email= :email";
@@ -62,8 +81,4 @@ public class OnlineWalletDaoImpl implements OnlineWalletDao {
 				email);
 		return query.getSingleResult();
 	}
-	
-	
-	
-	
 }
